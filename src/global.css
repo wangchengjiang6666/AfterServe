@@ -30,3 +30,6 @@ body {
 .ant-menu-submenu-active {
   color: #fff;
 }
+.ant-form {
+  margin-top: 100px;
+}

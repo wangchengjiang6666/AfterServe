@@ -1,8 +1,8 @@
 /**
  * Routes:
+ *  - ./src/routes/PrivateRoute.js
  *  - ./src/layouts/SimpleLayout.js
  */
-import styles from './index.css';
 
 export default function() {
   return (

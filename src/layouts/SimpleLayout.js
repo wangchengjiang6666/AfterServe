@@ -5,6 +5,7 @@ import style from './SimpleLayout.scss';
 import NavLink from 'umi/navlink';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+
 class SimpleLayout extends React.Component {
   constructor() {
     super();
@@ -27,11 +28,13 @@ class SimpleLayout extends React.Component {
     menus.forEach(menu => {
       allMenuItems.push(...menu.menuItem);
     });
-    // console.log(allMenuItems);
-    let curMenu = allMenuItems.find(item => item.ItemHref === path);
-    let openKeys = [curMenu.id.split('-')[0]];
-    let selectedKeys = [curMenu.id];
-    // console.log(selectedKeys);
+
+    let curMenu = allMenuItems.find(item => {
+      return item.ItemHref && item.ItemHref === path;
+    });
+
+    let openKeys = curMenu ? [curMenu.id.split('-')[0]] : [];
+    let selectedKeys = curMenu ? [curMenu.id] : [];
     return (
       <Fragment>
         <Layout style={{ height: '100%' }}>
