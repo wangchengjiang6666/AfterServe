@@ -1,7 +1,32 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
 body {
   margin: 0;
+}
+.anticon[tabindex] {
+  margin-right: 10px;
+}
+.ant-menu {
+  background: '#1a1b20';
+  color: '#fff';
+}
+.ant-menu-submenu > .ant-menu {
+  background-color: #1a1b20 !important;
+  color: #fff;
+}
+.ant-menu-item-selected {
+  background-color: #009688 !important;
+}
+.ant-layout a {
+  color: rgba(255, 255, 255, 0.65);
+}
+.ant-menu-submenu-selected {
+  color: rgba(255, 255, 255, 0.65);
+}
+.ant-menu-submenu-active {
+  color: #fff;
 }
