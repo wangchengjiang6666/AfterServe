@@ -6,9 +6,13 @@ import NavLink from 'umi/navlink';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 class SimpleLayout extends React.Component {
-  state = {
-    collapsed: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      collapsed: false,
+      navname: '用户列表',
+    };
+  }
 
   toggle = () => {
     this.setState({
@@ -16,7 +20,18 @@ class SimpleLayout extends React.Component {
     });
   };
   render() {
-    let { menus } = this.props;
+    let { menus, match } = this.props;
+    let path = match.path;
+
+    let allMenuItems = [];
+    menus.forEach(menu => {
+      allMenuItems.push(...menu.menuItem);
+    });
+    // console.log(allMenuItems);
+    let curMenu = allMenuItems.find(item => item.ItemHref === path);
+    let openKeys = [curMenu.id.split('-')[0]];
+    let selectedKeys = [curMenu.id];
+    // console.log(selectedKeys);
     return (
       <Fragment>
         <Layout style={{ height: '100%' }}>
@@ -28,7 +43,6 @@ class SimpleLayout extends React.Component {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={['2']}
               style={{
                 lineHeight: '50px',
                 background: '#1a1b20',
@@ -51,8 +65,8 @@ class SimpleLayout extends React.Component {
             >
               <Menu
                 mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={[]}
+                defaultOpenKeys={openKeys}
+                defaultSelectedKeys={selectedKeys}
                 style={{ height: '100%', borderRight: 0, background: '#1a1b20', color: '#fff' }}
               >
                 {menus.map(item => {
@@ -62,14 +76,18 @@ class SimpleLayout extends React.Component {
                       title={
                         <span>
                           <Icon type={item.type} />
-                          <NavLink to={item.href}>{item.menuName}</NavLink>
+                          {item.menuName}
                         </span>
                       }
                       style={{ background: '#1a1b20' }}
                     >
                       {item.menuItem &&
-                        item.menuItem.map((val, index) => {
-                          return <Menu.Item key={index}>{val}</Menu.Item>;
+                        item.menuItem.map(val => {
+                          return (
+                            <Menu.Item key={val.id}>
+                              <NavLink to={val.ItemHref}>{val.ItemName}</NavLink>
+                            </Menu.Item>
+                          );
                         })}
                     </SubMenu>
                   );
@@ -84,8 +102,9 @@ class SimpleLayout extends React.Component {
                   onClick={this.toggle}
                 />
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
+                <Breadcrumb.Item style={{ color: 'black' }}>
+                  <a href="">{this.state.navname}</a>
+                </Breadcrumb.Item>
               </Breadcrumb>
               <Content
                 style={{
