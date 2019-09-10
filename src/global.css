@@ -21,7 +21,7 @@ body {
   color: #fff;
 }
 .ant-menu-item-selected {
-  background-color: #009688 !important;
+  background-color: #498a8a4f !important;
 }
 .ant-layout a {
   color: rgba(255, 255, 255, 0.65);
@@ -37,4 +37,10 @@ color: #009688;
 }
 .ant-form {
   margin-top: 100px;
+}
+.ant-layout-content {
+  overflow-y: auto;
+}
+.anticon-left, .anticon-right {
+  color: aquamarine;
 }
