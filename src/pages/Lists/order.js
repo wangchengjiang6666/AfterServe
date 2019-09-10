@@ -24,9 +24,9 @@ class Order extends React.Component {
     columns={columns}
     expandedRowRender={record => <div style={{ margin: 0 }} >
     <ul className={style.order_list} >
-      <li ><span >用户名</span><strong >{this.props.restaurantMsg.phone}</strong></li>
+      <li ><span >用户名</span><strong >{this.props.username}</strong></li>
       <li><span >店铺名称</span><strong >{this.props.restaurantMsg.name}</strong></li>
-      <li><span>收货地址</span><strong >{this.props.restaurantMsg.address}</strong></li>
+      <li><span>收货地址</span><strong >{this.props.address}</strong></li>
       <li><span>店铺ID</span><strong >{record.restaurant_id}</strong></li>
       <li><span>店铺地址</span><strong >{this.props.restaurantMsg.address}</strong></li>
     </ul>
@@ -39,7 +39,6 @@ class Order extends React.Component {
       defaultCurrent:1
     }}
   />
-
       </Fragment>
     );
   }
@@ -54,7 +53,9 @@ export default connect(
     return {
       orderList: orderManage.orderList,
       count: orderManage.count,
-      restaurantMsg: orderManage.restaurantMsg
+      restaurantMsg: orderManage.restaurantMsg,
+      username: orderManage.getusername,
+      address: orderManage.getaddress
     }
   },
   // null,
@@ -62,19 +63,22 @@ export default connect(
     return {
       getOrderList(current) {
         console.log(current);
-        let page = (current-1)*20;
+        let page = (current-1)*10;
         dispatch({
           type: 'orderManage/getOrderList',
           page
         });
       },
       getAddres(expanded, record) {
-        console.log(record.restaurant_id);
+        dispatch(
+          {
+            type: 'orderManage/getRestaurant',
+            restaurant: record.restaurant_id,
+            user_id: record.user_id,
+            address_id: record.address_id
+          }
+        )
         
-        dispatch({
-          type: 'orderManage/getRestaurant',
-          restaurant: record.restaurant_id
-        })
       },
       getOrdertotal() {
         dispatch({
