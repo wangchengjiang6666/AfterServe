@@ -6,7 +6,6 @@ const PrivateRoute = ({ children, user, menus, match }) => {
     let pach = match.path;
     return <Fragment>{children}</Fragment>;
   } else {
-    alert(1);
     return <Redirect to="/login" />;
   }
 };

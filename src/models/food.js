@@ -33,7 +33,7 @@ export default {
       const result = yield request.get('https://elm.cangdu.org/shopping/v2/foods', {
         params: {
           offset: action.page || 1,
-          limit: 7,
+          limit: 10,
           restaurant_id: 2,
         },
       });

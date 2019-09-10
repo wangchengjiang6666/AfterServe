@@ -3,6 +3,7 @@ body,
 #root {
   height: 100%;
 }
+
 li {
   list-style: none;
 }
@@ -26,8 +27,8 @@ body {
 .ant-layout a {
   color: rgba(255, 255, 255, 0.65);
 }
-.ant-pagination-item> a {
-color: #009688;
+.ant-pagination-item > a {
+  color: #009688;
 }
 .ant-menu-submenu-selected {
   color: rgba(255, 255, 255, 0.65);
@@ -41,6 +42,7 @@ color: #009688;
 .ant-layout-content {
   overflow-y: auto;
 }
-.anticon-left, .anticon-right {
+.anticon-left,
+.anticon-right {
   color: aquamarine;
 }
