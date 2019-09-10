@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { message } from 'antd';
-
+const user = window.sessionStorage.getItem('user');
 export default {
   namespaced: 'global',
   state: {
@@ -27,11 +27,11 @@ export default {
         id: 3,
         type: 'notification',
         menuName: '设置',
-        menuItem: [],
+        menuItem: [{ id: '3-1', ItemName: '管理员设置', ItemHref: '/Lists/admin' }],
       },
     ],
     //当前用户登录的个人信息
-    user: '',
+    user: user ? JSON.parse(user) : '',
   },
   effects: {
     *loginSync(action, { put }) {
