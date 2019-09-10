@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { message } from 'antd';
+
 export default {
   namespaced: 'global',
   state: {
@@ -27,13 +30,40 @@ export default {
         menuItem: [],
       },
     ],
+
     navName: '',
   },
+  effects: {
+    *loginSync(action, { put }) {
+      const result = yield axios.post('https://elm.cangdu.org/admin/login', action.payload);
+      console.log(result);
+      if (result.data.status === 1) {
+        message.success('登录成功');
+        yield put({ type: 'login', user: action.payload.user_name });
+        action.history.replace('/');
+        window.sessionStorage.setItem('user', JSON.stringify(action.payload.user_name));
+        // window.sessionStorage.setItem('jwt', JSON.stringify(result.data.jwt));
+      } else {
+        message.error('用户名或密码不正确');
+      }
+    },
+  },
   reducers: {
+    login(state, action) {
+      return {
+        ...state,
+        ...{
+          user: action.user,
+        },
+      };
+    },
     handleChange(state, action) {
       return {
         ...state,
         navName: action.navName,
+
+        //当前用户登录的个人信息
+        user: '',
       };
     },
   },
