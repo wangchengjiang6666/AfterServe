@@ -54,7 +54,7 @@ export default {
  );
       yield put({
         type: 'setOrderList',
-        orderList: result,
+        orderList: result.data,
       })  
     },
 
@@ -63,7 +63,7 @@ export default {
       const result1 = yield request.get('http://elm.cangdu.org/bos/orders/count');
       yield put({
         type: 'setOrderCount',
-        count: result1.count
+        count: result1.data.count
       })   
     },
     //获取表格展开时的订单相关参数
@@ -73,9 +73,9 @@ export default {
       const result4 = yield request.get(`http://elm.cangdu.org/v1/addresse/${action.address_id}`);
       yield put({
         type: 'setRestaurantMsg',
-        restaurantMsg: result2,
-        username: result3.username,
-        address: result4.address
+        restaurantMsg: result2.data,
+        username: result3.data.username,
+        address: result4.data.address
       })
     },
   }
