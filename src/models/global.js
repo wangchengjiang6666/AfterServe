@@ -30,8 +30,11 @@ export default {
         menuItem: [{ id: '3-1', ItemName: '管理员设置', ItemHref: '/Lists/admin' }],
       },
     ],
+
     //当前用户登录的个人信息
     user: user ? JSON.parse(user) : '',
+
+    navName: '',
   },
   effects: {
     *loginSync(action, { put }) {
@@ -55,6 +58,15 @@ export default {
         ...{
           user: action.user,
         },
+      };
+    },
+    handleChange(state, action) {
+      return {
+        ...state,
+        navName: action.navName,
+
+        //当前用户登录的个人信息
+        user: '',
       };
     },
   },

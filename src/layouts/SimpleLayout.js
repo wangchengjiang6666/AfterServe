@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import style from './SimpleLayout.scss';
 import NavLink from 'umi/navlink';
+import Link from 'umi/link';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
@@ -11,7 +12,6 @@ class SimpleLayout extends React.Component {
     super();
     this.state = {
       collapsed: false,
-      navname: '用户列表',
     };
   }
 
@@ -25,6 +25,7 @@ class SimpleLayout extends React.Component {
     let path = match.path;
 
     let allMenuItems = [];
+    // console.log(menus);
     menus.forEach(menu => {
       allMenuItems.push(...menu.menuItem);
     });
@@ -42,7 +43,7 @@ class SimpleLayout extends React.Component {
             className={style.header}
             style={{ background: '#1a1b20', color: '#fff', height: '50px' }}
           >
-            <div className={style.logo}>三千包吃住组</div>
+            <div className={style.logo}></div>
             <Menu
               theme="dark"
               mode="horizontal"
@@ -72,6 +73,12 @@ class SimpleLayout extends React.Component {
                 defaultSelectedKeys={selectedKeys}
                 style={{ height: '100%', borderRight: 0, background: '#1a1b20', color: '#fff' }}
               >
+                <Menu.Item key="3" className={path === '/' ? 'ant-menu-item-selected' : ''}>
+                  <NavLink to="/">
+                    <Icon type="inbox" />
+                    <span>welcome</span>
+                  </NavLink>
+                </Menu.Item>
                 {menus.map(item => {
                   return (
                     <SubMenu
@@ -88,7 +95,16 @@ class SimpleLayout extends React.Component {
                         item.menuItem.map(val => {
                           return (
                             <Menu.Item key={val.id}>
-                              <NavLink to={val.ItemHref}>{val.ItemName}</NavLink>
+                              <Link
+                                to={val.ItemHref}
+                                onClick={e => {
+                                  // console.log(e.target.innerText);
+                                  let html = e.target.innerText;
+                                  this.props.change(html);
+                                }}
+                              >
+                                {val.ItemName}
+                              </Link>
                             </Menu.Item>
                           );
                         })}
@@ -106,7 +122,7 @@ class SimpleLayout extends React.Component {
                 />
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item style={{ color: 'black' }}>
-                  <a href="">{this.state.navname}</a>
+                  <a href="">{this.props.navName}</a>
                 </Breadcrumb.Item>
               </Breadcrumb>
               <Content
@@ -130,7 +146,17 @@ export default connect(
   ({ global }) => {
     return {
       menus: global.menus,
+      navName: global.navName,
     };
   },
-  null,
+  dispatch => {
+    return {
+      change: navName => {
+        dispatch({
+          type: 'global/handleChange',
+          navName,
+        });
+      },
+    };
+  },
 )(SimpleLayout);
