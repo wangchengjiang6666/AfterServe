@@ -64,9 +64,6 @@ export default {
       return {
         ...state,
         navName: action.navName,
-
-        //当前用户登录的个人信息
-        user: '',
       };
     },
   },
