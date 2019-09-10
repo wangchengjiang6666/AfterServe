@@ -27,5 +27,14 @@ export default {
         menuItem: [],
       },
     ],
+    navName: '',
+  },
+  reducers: {
+    handleChange(state, action) {
+      return {
+        ...state,
+        navName: action.navName,
+      };
+    },
   },
 };
